@@ -1,0 +1,26 @@
+<Project>
+
+    <Import Project="..\Directory.Build.props" />
+
+    <PropertyGroup>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+        <None Include="..\..\LICENSE.txt"  Visible="false">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Pack>true</Pack>
+            <PackagePath>$(PackageLicenseFile)</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <Target Name="CopyFilesToPublish" AfterTargets="Publish">
+        <Copy SourceFiles="..\..\LICENSE.txt" DestinationFolder="$(PublishDir)"/>
+        <Copy SourceFiles="..\..\README.md" DestinationFolder="$(PublishDir)"/>
+    </Target>
+
+</Project>

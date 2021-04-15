@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup Label="Build Settings">
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <RootNamespace>SourceEngine.Bsp</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Assembly Metadata">
+        <Description>A library to calculate a CRC32 checksum for a BSP file.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="packages.lock.json" />
+    </ItemGroup>
+
+</Project>
