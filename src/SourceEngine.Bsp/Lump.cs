@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace SourceEngine.Bsp
@@ -26,6 +27,27 @@ namespace SourceEngine.Bsp
         public int CompareTo(Lump other)
         {
             return FileOffset - other.FileOffset;
+        }
+
+        public IEnumerable<int> Read(BinaryReader reader, byte[] buffer)
+        {
+            int size = FileLength;
+            if (size <= 0)
+                yield break;
+
+            reader.BaseStream.Seek(FileOffset, SeekOrigin.Begin);
+
+            while (size > 0)
+            {
+                int countToRead = size > buffer.Length ? buffer.Length : size;
+                int bytesRead = reader.Read(buffer, 0, countToRead);
+
+                if (bytesRead > 0)
+                {
+                    size -= bytesRead;
+                    yield return bytesRead;
+                }
+            }
         }
     }
 }
