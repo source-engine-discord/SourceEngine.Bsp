@@ -3,16 +3,16 @@ using System.IO;
 
 namespace SourceEngine.Bsp
 {
-    internal struct Header
+    internal readonly struct Header
     {
         private const int IDENTIFIER = ('P' << 24) + ('S' << 16) + ('B' << 8) + 'V';
         private const int MIN_BSP_VERSION = 19;
         private const int BSP_VERSION = 21;
 
-        public int Identifier; // BSP file identifier
-        public int Version; // BSP file version
-        public Lump[] Lumps; // Lump directory array
-        public int MapRevision; // Map's version/revision number
+        public readonly int Identifier; // BSP file identifier
+        public readonly int Version; // BSP file version
+        public readonly Lump[] Lumps; // Lump directory array
+        public readonly int MapRevision; // Map's version/revision number
 
         public Header(BinaryReader reader)
         {

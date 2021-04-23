@@ -3,13 +3,13 @@ using System.IO;
 
 namespace SourceEngine.Bsp
 {
-    internal struct Lump : IComparable<Lump>
+    internal readonly struct Lump : IComparable<Lump>
     {
-        public int FileOffset; // Offset into the file (bytes)
-        public int FileLength; // Length of lump (bytes)
-        public int Version; // Lump format version
-        public byte[] FourCC; // Lump identifier code
-        public byte Type;
+        public readonly int FileOffset; // Offset into the file (bytes)
+        public readonly int FileLength; // Length of lump (bytes)
+        public readonly int Version; // Lump format version
+        public readonly byte[] FourCC; // Lump identifier code
+        public readonly byte Type;
 
         public Lump(BinaryReader reader, byte type)
         {
