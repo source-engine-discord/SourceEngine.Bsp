@@ -25,8 +25,8 @@ namespace SourceEngine.Bsp
                 throw new Exception($"Map has incorrect BSP version ({Version} should be {BSP_VERSION}).");
 
             Lumps = new Lump[64];
-            for (int lump = 0; lump < Lumps.Length; ++lump)
-                Lumps[lump] = new Lump(reader);
+            for (byte lump = 0; lump < Lumps.Length; ++lump)
+                Lumps[lump] = new Lump(reader, lump);
 
             MapRevision = reader.ReadInt32();
         }

@@ -9,13 +9,15 @@ namespace SourceEngine.Bsp
         public int FileLength; // Length of lump (bytes)
         public int Version; // Lump format version
         public byte[] FourCC; // Lump identifier code
+        public byte Type;
 
-        public Lump(BinaryReader reader)
+        public Lump(BinaryReader reader, byte type)
         {
             FileOffset = reader.ReadInt32();
             FileLength = reader.ReadInt32();
             Version = reader.ReadInt32();
             FourCC = new byte[4];
+            Type = type;
 
             for (int i = 0; i < FourCC.Length; ++i)
                 FourCC[i] = reader.ReadByte();
