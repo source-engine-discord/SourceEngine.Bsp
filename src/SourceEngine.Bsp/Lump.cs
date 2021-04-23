@@ -1,8 +1,9 @@
+using System;
 using System.IO;
 
 namespace SourceEngine.Bsp
 {
-    internal struct Lump
+    internal struct Lump : IComparable<Lump>
     {
         public int FileOffset; // Offset into the file (bytes)
         public int FileLength; // Length of lump (bytes)
@@ -18,6 +19,11 @@ namespace SourceEngine.Bsp
 
             for (int i = 0; i < FourCC.Length; ++i)
                 FourCC[i] = reader.ReadByte();
+        }
+
+        public int CompareTo(Lump other)
+        {
+            return FileOffset - other.FileOffset;
         }
     }
 }
