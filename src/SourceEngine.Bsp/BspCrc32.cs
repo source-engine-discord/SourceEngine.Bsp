@@ -24,7 +24,9 @@ namespace SourceEngine.Bsp
         /// <exception cref="ArgumentException">
         /// The input stream does not support reading or seeking, is <see langword="null"/>, or is already closed.
         /// </exception>
-        /// <exception cref="Exception">The identifier is invalid or the BSP version is unsupported.</exception>
+        /// <exception cref="InvalidDataException">
+        /// The identifier in the BSP is invalid or the BSP version is unsupported.
+        /// </exception>
         public static uint Compute(Stream input)
         {
             if (!input.CanSeek)

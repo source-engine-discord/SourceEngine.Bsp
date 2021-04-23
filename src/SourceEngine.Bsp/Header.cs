@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace SourceEngine.Bsp
@@ -26,16 +25,18 @@ namespace SourceEngine.Bsp
         /// on the data read from the specified <paramref name="reader"/>.
         /// </summary>
         /// <param name="reader">The <see cref="BinaryReader"/> to read BSP data from.</param>
-        /// <exception cref="Exception">The identifier is invalid or the BSP version is unsupported.</exception>
+        /// <exception cref="InvalidDataException">
+        /// The identifier is invalid or the BSP version is unsupported.
+        /// </exception>
         public Header(BinaryReader reader)
         {
             Identifier = reader.ReadInt32();
             if (Identifier != IDENTIFIER)
-                throw new Exception("Invalid BSP header identifier.");
+                throw new InvalidDataException("Invalid BSP header identifier.");
 
             Version = reader.ReadInt32();
             if (Version is < MIN_BSP_VERSION or > BSP_VERSION)
-                throw new Exception($"Map has incorrect BSP version ({Version} should be {BSP_VERSION}).");
+                throw new InvalidDataException($"Map has incorrect BSP version ({Version} should be {BSP_VERSION}).");
 
             Lumps = new Lump[64];
             for (byte lump = 0; lump < Lumps.Length; ++lump)
