@@ -11,6 +11,9 @@ namespace SourceEngine.Bsp
 
         public static uint Compute(Stream input)
         {
+            if (!input.CanSeek)
+                throw new ArgumentException("Input stream must be seekable.", nameof(input));
+
             using var reader = new BinaryReader(input);
 
             var header = new Header(reader);
