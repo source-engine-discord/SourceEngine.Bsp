@@ -3,6 +3,13 @@ using System.IO;
 
 namespace SourceEngine.Bsp
 {
+    /// <summary>
+    /// The header of a BSP file.
+    /// </summary>
+    /// <remarks>
+    /// Supports BSP versions 19 to 21, inclusive.
+    /// </remarks>
+    /// <seealso href="https://developer.valvesoftware.com/wiki/Source_BSP_File_Format#BSP_file_header"/>
     internal readonly struct Header
     {
         private const int IDENTIFIER = ('P' << 24) + ('S' << 16) + ('B' << 8) + 'V';
@@ -14,6 +21,12 @@ namespace SourceEngine.Bsp
         public readonly Lump[] Lumps; // Lump directory array
         public readonly int MapRevision; // Map's version/revision number
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="Header"/> struct based
+        /// on the data read from the specified <paramref name="reader"/>.
+        /// </summary>
+        /// <param name="reader">The <see cref="BinaryReader"/> to read BSP data from.</param>
+        /// <exception cref="Exception">The identifier is invalid or the BSP version is unsupported.</exception>
         public Header(BinaryReader reader)
         {
             Identifier = reader.ReadInt32();
