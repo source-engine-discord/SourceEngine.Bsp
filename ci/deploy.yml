@@ -1,0 +1,27 @@
+steps:
+  - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), startsWith(variables['Build.SourceBranch'], 'refs/tags/v')) }}:
+    - task: PowerShell@2
+      inputs:
+        filePath: ci/check_version.ps1
+      displayName: 'Check version'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Pack projects'
+      inputs:
+        command: pack
+        projects: $(project).sln
+        configuration: $(configuration)
+        outputDir: $(Build.ArtifactStagingDirectory)
+        includesymbols: true
+        nobuild: true
+        verbosityPack: normal
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Push packages'
+      inputs:
+        command: custom
+        custom: nuget
+        arguments: >
+          push $(Build.ArtifactStagingDirectory)/*.nupkg
+          -s $(NuGet.SourceUrl)
+          -k $(NuGet.ApiKey)
