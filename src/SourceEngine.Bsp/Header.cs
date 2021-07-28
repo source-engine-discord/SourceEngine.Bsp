@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.IO;
 
 namespace SourceEngine.Bsp
@@ -17,7 +18,7 @@ namespace SourceEngine.Bsp
 
         public readonly int Identifier; // BSP file identifier
         public readonly int Version; // BSP file version
-        public readonly Lump[] Lumps; // Lump directory array
+        public readonly ImmutableArray<Lump> Lumps; // Lump directory array
         public readonly int MapRevision; // Map's version/revision number
 
         /// <summary>
@@ -38,10 +39,11 @@ namespace SourceEngine.Bsp
             if (Version is < MIN_BSP_VERSION or > BSP_VERSION)
                 throw new InvalidDataException($"Map has incorrect BSP version ({Version} should be {BSP_VERSION}).");
 
-            Lumps = new Lump[64];
-            for (byte lump = 0; lump < Lumps.Length; ++lump)
-                Lumps[lump] = new Lump(reader, lump);
+            ImmutableArray<Lump>.Builder lumps = ImmutableArray.CreateBuilder<Lump>(64);
+            for (byte lump = 0; lump < 64; ++lump)
+                lumps[lump] = new Lump(reader, lump);
 
+            Lumps = lumps.ToImmutable();
             MapRevision = reader.ReadInt32();
         }
     }

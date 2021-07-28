@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Immutable;
 using System.IO;
 
 using Force.Crc32;
@@ -35,12 +36,12 @@ namespace SourceEngine.Bsp
             using var reader = new BinaryReader(input);
 
             var header = new Header(reader);
-            Array.Sort(header.Lumps);
+            ImmutableArray<Lump> lumps = header.Lumps.Sort();
 
             uint crc = uint.MaxValue;
             byte[] chunk = new byte[65536];
 
-            foreach (Lump lump in header.Lumps)
+            foreach (Lump lump in lumps)
             {
                 if (lump.Type == LUMP_ENTITIES)
                     continue; // Entities lump should never be in the checksum.
