@@ -29,6 +29,7 @@ namespace SourceEngine.Bsp
         public readonly int Version; // Lump format version
         public readonly byte[] FourCC; // Lump identifier code
         public readonly byte Type;
+        private readonly BinaryReader reader;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="Lump"/> struct based
@@ -44,6 +45,7 @@ namespace SourceEngine.Bsp
             Version = reader.ReadInt32();
             FourCC = new byte[4];
             Type = type;
+            this.reader = reader;
 
             for (int i = 0; i < FourCC.Length; ++i)
                 FourCC[i] = reader.ReadByte();
@@ -66,10 +68,9 @@ namespace SourceEngine.Bsp
         /// Each iteration, the <paramref name="buffer"/> is updated with the read data
         /// and the number of bytes read is yielded.
         /// </summary>
-        /// <param name="reader">The <see cref="BinaryReader"/> to read BSP data from.</param>
         /// <param name="buffer">The buffer to read data into.</param>
         /// <returns>Yields the number of bytes read for the current chunk.</returns>
-        public IEnumerable<int> Read(BinaryReader reader, byte[] buffer)
+        public IEnumerable<int> Read(byte[] buffer)
         {
             int size = FileLength;
             if (size <= 0)

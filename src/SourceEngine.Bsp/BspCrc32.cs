@@ -48,7 +48,7 @@ namespace SourceEngine.Bsp
                 // Every append XORs the CRC with uint.MaxValue at the start and
                 // at the end. Source Engine does not do this. Therefore, take
                 // the bitwise complement to cancel out the XORs.
-                foreach (var bytesRead in lump.Read(reader, chunk))
+                foreach (var bytesRead in lump.Read(chunk))
                     crc = ~Crc32Algorithm.Append(~crc, chunk, 0, bytesRead);
             }
 
