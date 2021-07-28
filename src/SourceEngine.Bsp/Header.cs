@@ -16,10 +16,35 @@ namespace SourceEngine.Bsp
         private const int MIN_BSP_VERSION = 19;
         private const int BSP_VERSION = 21;
 
-        public readonly int Identifier; // BSP file identifier
-        public readonly int Version; // BSP file version
-        public readonly ImmutableArray<Lump> Lumps; // Lump directory array
-        public readonly int MapRevision; // Map's version/revision number
+        /// <summary>
+        /// BSP file identifier.
+        /// </summary>
+        /// <remarks>
+        /// Should always be "VBSP" in ASCII.
+        /// </remarks>
+        public readonly int Identifier;
+
+        /// <summary>
+        /// BSP file version.
+        /// </summary>
+        /// <remarks>
+        /// Only versions 19 to 21, inclusive, are supported.
+        /// </remarks>
+        public readonly int Version;
+
+        /// <summary>
+        /// Lump directory which contains information to locate lump data within the file.
+        /// </summary>
+        /// <seealso cref="Lump"/>
+        public readonly ImmutableArray<Lump> Lumps;
+
+        /// <summary>
+        /// Map's revision/version number.
+        /// </summary>
+        /// <remarks>
+        /// Increased each time the map is saved in the Hammer editor.
+        /// </remarks>
+        public readonly int MapRevision;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="Header"/> struct based

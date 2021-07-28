@@ -25,11 +25,37 @@ namespace SourceEngine.Bsp
     /// <seealso href="https://developer.valvesoftware.com/wiki/Source_BSP_File_Format#Lump_structure"/>
     internal readonly struct Lump : IComparable<Lump>
     {
-        public readonly int FileOffset; // Offset into the file (bytes)
-        public readonly int FileLength; // Length of lump (bytes)
-        public readonly int Version; // Lump format version
-        public readonly ImmutableArray<byte> FourCC; // Lump identifier code
+        /// <summary>
+        /// Offset, in bytes, at which the lump's data is located in the file.
+        /// </summary>
+        public readonly int FileOffset;
+
+        /// <summary>
+        /// Length, in bytes, of the lump's data.
+        /// </summary>
+        public readonly int FileLength;
+
+        /// <summary>
+        /// Format version of the lump.
+        /// </summary>
+        public readonly int Version;
+
+        /// <summary>
+        /// 4-byte identifier code for the lump.
+        /// </summary>
+        /// <remarks>
+        /// In practice, it's always all zeros.
+        /// </remarks>
+        public readonly ImmutableArray<byte> FourCC;
+
+        /// <summary>
+        /// Type of the lump.
+        /// </summary>
         public readonly byte Type;
+
+        /// <summary>
+        /// <see cref="BinaryReader"/> from which to read lump data.
+        /// </summary>
         private readonly BinaryReader reader;
 
         /// <summary>
